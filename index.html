@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FENERİN MAÇI VAR !</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@[VERSION]/dist/L.Control.Locate.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.76.1/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,300,700);
+html,body{
+display: flex;
+margin: 0px;
+padding: 0px;
+height: 100%;
+width: 100%;
+background-color: rgb(228, 228, 228);
+
+background-repeat:no-repeat;
+overflow-x:visible;
+}
+.containeer{
+position: relative;
+margin-top: 50px;
+height: 100vh;
+width: 100%;
+}
+
+.saat{
+position:absolute;
+height: 60px;
+width: 700px;
+left: 27%;
+font-size: 350%;
+font-family: monospace;
+background-color: #bdbdbd;
+padding-left: 45px;
+padding-top: 10px;
+padding-bottom: 10px;
+border-radius: 20px;
+}
+
+#day{
+text-align:center;
+font-size: 65px;
+padding-top: 3%;
+align-items: center;
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+color:#505d67;
+-webkit-text-stroke: 1px;
+-webkit-text-stroke-color: #1d1e1f;
+
+}
+#hour{
+text-align:center;
+align-items: center;
+float: left;
+margin-right: 1%;
+}
+#minute{
+float: left;
+text-align: center;
+margin-right: 1%;
+margin-left: 1%;
+
+}
+#second{
+    float: left;
+    margin-left: 1%;
+    text-align: center;
+
+}
+
+#map{
+position: absolute;
+height: 400px;
+width: 280px;
+top: 360px;
+left: 1170px;
+border-style: solid;
+border-radius: 50px;
+font-size: 50px;
+border-color:#505d67;
+border-width: 3px;
+z-index: 1
+}
+
+#rakip1{
+height: 30px;
+width: 200px;
+top:80px;
+left: 60px;
+}
+h5{
+padding-top: 500px;
+text-align: center;
+}
+h4{
+font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.header { 
+position: absolute;
+display:flex;
+top: 0px;
+height:50px;
+width:100%;
+background-color:#505d67;
+
+}
+
+.footer{
+position: absolute;
+bottom: -300px;
+height: 200px;
+width: 100%;
+background-color:#505d67;
+background-size: 100% 100%;
+margin-top: 500px;
+text-align: center;
+align-items: center;
+}
+.footer img{
+width:100%;
+height:250px;
+object-fit:cover;
+}
+.sidebar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+#next{
+display: flex;
+position: absolute;
+justify-content: center;            
+align-items: center;
+height: 120px;
+width: 120px;
+top: 600px;
+left: 150px;
+color: blue;
+background-color:transparent;
+font-size: 50PX;
+
+}
+
+button {
+  position: relative;
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+  left: 25%;
+  top: 50px;
+ 
+  
+}
+
+button:hover {
+  background-color: #697e8f;
+  color: rgb(8, 0, 114);
+}
+
+.previous {
+  background-color: #f1f1f1;
+  color: black;
+  font-size: large;
+  border-radius: 40px;
+  border-color: transparent;
+}
+
+.next {
+  background-color: #f1f1f1;
+  color: black; 
+   font-size: large;
+   border-radius: 40px;
+   margin-left: 2px;
+   border-color: transparent;
+}
+
+.round {
+  border-radius: 50%;
+}
+#rakip{
+position: absolute;
+height: 380px;
+width: 280px;
+top: 360px;
+left: 100px;
+padding-top: 30px;
+color: #424c54;
+background-color:#bdbdbd;
+align-items: center;
+text-align: center;
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 30px;
+border-radius: 50px;
+}
+
+.icerik{
+position: absolute;
+padding: 1%;
+width:15%;
+border-style: solid;
+border-radius: 10px;
+left: 43%;
+top: 15%;
+text-align: center;
+justify-content: center;
+
+
+}
+
+.fa {
+  padding: 5px;
+  margin: 5px 5px 5px 5px;
+  font-size: 20px;
+  width: 20px;
+  text-align: center;
+  text-decoration: none;
+  color: rgb(10, 9, 9);
+  border-style: solid;
+  border-color: #1d1e1f;
+}
+
+hr{
+border:1px solid rgb(147, 147, 147);
+}
+span{
+  margin: 5px 5px 5px 5px;
+}
+
+#hd{
+border-style: none;
+color: white;
+}
+#süperlig{
+position: absolute;
+width: 80px;
+height: 80px;
+top: -10px;
+right: -10px;
+}
+#fb{
+position: absolute;
+width: 400px;
+left: 38%;
+top: 35%;
+}
+
+</style>
+
+</head>
+<body>
+    
+<div class="header">
+  <a id="hd" st href="https://www.linkedin.com/in/berkay-ba%C5%9Fkaya-8295331ab" class="fa fa-linkedin-square"></a> 
+  <a id="hd" style="border-right:solid"  href="mailto:berkaymbaskaya@gmail.com" class="fa fa-envelope"> </a> 
+<p  style="font-style:italic; padding-left: 20px; color: #f1f1f1;"> Satır satır, Hece hece ...</p></div>
+
+<div class="containeer">
+
+<img id="fb" src="https://game-tournaments.com/media/logo/t31956.png?82" alt="">
+<div id="day"></div>
+<div  class="saat"> 
+    <div id="hour"></div>
+    <div id="minute"></div>
+    <div id="second"></div>
+</div>
+
+<div id="map"></div>
+<div id="rakip"> </div>
+<div id="next"> 
+<button  class="previous" id="back"> &laquo</button>
+<button class="next" id="go">&raquo</button>
+<img id="süperlig" src="" alt="">
+ </div>
+
+</div>
+<div  class="footer" >
+    <div class="icerik">
+      <span style="font-size: 25px;">Contact</span><br> <hr>
+      <span> Berkay Mehmet Başkaya  </span> <br>
+      <span>berkaymbaskaya@gmail.com </span> <br>
+        <a href="https://www.linkedin.com/in/berkay-ba%C5%9Fkaya-8295331ab" class="fa fa-linkedin-square"></a> 
+       <a href="mailto:berkaymbaskaya@gmail.com" class="fa fa-envelope"> </a> 
+      </span> 
+     
+    </div>
+
+  
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+<script>
+var data={
+maclar:[
+{
+    
+    "gün": 3,
+    "ay": 9,
+    "yıl": 2022,
+    "rakip": "denemespor",
+    "enlem": 40.987652,
+    "boylam": 29.037161,
+    "saat":(11,00)
+   },
+
+
+ {
+    
+  "gün": 3,
+  "ay": 9,
+  "yıl": 2022,
+  "rakip": "Kayserispor",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":21,
+  "dakika":45
+ },
+
+
+ {
+
+  "gün": 8,
+  "ay": 9,
+  "yıl": 2022,
+  "rakip": "Dinamo Kiev",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":19,
+  "dakika":45,
+  "tür":1
+ },
+
+ {
+
+"gün": 15,
+"ay": 9,
+"yıl": 2022,
+"rakip": "Rennes",
+"enlem": 48.10817584152474,
+"boylam": -1.7126518232676782,
+"saat":22,
+"dakika":00,
+"tür":1
+},
+
+ {
+  "gün": 18,
+  "ay": 9,
+  "yıl": 2022,
+  "rakip": "Alanyaspor",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":22,
+  "dakika":30
+ },
+ {
+  "gün": 2,
+  "ay": 10,
+  "yıl": 2022,
+  "rakip": "Beşiktaş",
+  "enlem": 41.03923,
+  "boylam": 28.994659,
+  "saat":19,
+  "dakika":45
+ },
+ {
+  "gün": 9,
+  "ay": 10,
+  "yıl": 2022,
+  "rakip": "Karagümrük",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":20,
+  "dakika":30
+ },
+
+ {
+
+"gün": 13,
+"ay": 10,
+"yıl": 2022,
+"rakip": "AEK",
+"enlem": 40.987652,
+"boylam": 29.037161,
+"saat":22,
+"dakika":00,
+"tür":1
+},
+ 
+ {
+  "gün": 16,
+  "ay": 10,
+  "yıl": 2022,
+  "rakip": "Ankaragücü",
+  "enlem": 39.979948,
+  "boylam": 32.613703,
+  "saat":19,
+  "dakika":00
+
+ },
+ {
+  "gün": 23,
+  "ay": 10,
+  "yıl": 2022,
+  "rakip": "Başakşehir",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":21,
+  "dakika":45
+
+ },
+
+ {
+
+"gün": 27,
+"ay": 10,
+"yıl": 2022,
+"rakip": "Rennes",
+"enlem": 40.987652,
+"boylam": 29.037161,
+"saat":19,
+"dakika":45,
+"tür":1
+},
+ {
+  "gün": 30,
+  "ay": 10,
+  "yıl": 2022,
+  "rakip": "İstanbulspor",
+  "enlem": 41.024415,
+  "boylam": 28.697785,
+  "saat":22,
+  "dakika":30
+
+ },
+
+ {
+
+"gün": 3,
+"ay": 11,
+"yıl": 2022,
+"rakip": "Dinamo Kiev",
+"enlem": 50.05793815709941,
+"boylam": 19.92006791813271,
+"saat":23,
+"dakika":00,
+"tür":1
+, 
+},
+ {
+  "gün": 6,
+  "ay": 11,
+  "yıl": 2022,
+  "rakip": "Sivasspor",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":19,
+  "dakika":0
+
+ },
+ {
+  "gün": 13,
+  "ay": 11,
+  "yıl": 2022,
+  "rakip": "Giresunspor",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":20,
+  "dakika":15
+
+ },
+ {
+  "gün": 25,
+  "ay": 12,
+  "yıl": 2022,
+  "rakip": "Trabzonspor",
+  "enlem": 40.998777,
+  "boylam": 39.646474,
+  "saat":22,
+  "dakika":30
+
+ },
+ {
+  "gün": 28,
+  "ay": 12,
+  "yıl": 2022,
+  "rakip": "Hatayspor",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":19,
+  "dakika":00
+
+ },
+ {
+  "gün": 4,
+  "ay": 1,
+  "yıl": 2023,
+  "rakip": "Antalyaspor",
+  "enlem": 36.888166,
+  "boylam": 30.668549,
+  "saat":19,
+  "dakika":45
+
+ },
+ {
+  "gün": 8,
+  "ay": 1,
+  "yıl": 2023,
+  "rakip": "Galatasaray",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":20,
+  "dakika":15
+
+ },
+ {
+  "gün": 15,
+  "ay": 1,
+  "yıl": 2023,
+  "rakip": "Gaziantep FK",
+  "enlem": 37.12372,
+  "boylam": 37.38268,
+  "saat":21,
+  "dakika":00
+
+ },
+ {
+  "gün": 22,
+  "ay": 1,
+  "yıl": 2023,
+  "rakip": "Ümraniye",
+  "enlem": 41.058664,
+  "boylam": 29.109345,
+  "saat":21,
+  "dakika":30
+
+ },
+ {
+  "gün": 29,
+  "ay": 1,
+  "yıl": 2023,
+  "rakip": "Kasımpaşa",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":21,
+  "dakika":00
+
+ },
+ {
+  "gün": 1,
+  "ay": 2,
+  "yıl": 2023,
+  "rakip": "Adana Demirspor",
+  "enlem": 37.063437,
+  "boylam": 35.375137,
+  "saat":19,
+  "dakika":15
+
+ },
+ {
+  "gün": 5,
+  "ay": 2,
+  "yıl": 2023,
+  "rakip": "Konyaspor",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":21,
+  "dakika":30
+
+ },
+ {
+  "gün": 12,
+  "ay": 2,
+  "yıl": 2023,
+  "rakip": "Kayserispor",
+  "enlem": 38.737129,
+  "boylam": 35.423108,
+  "saat":19,
+  "dakika":45
+
+ },
+ {
+  "gün": 26,
+  "ay": 2,
+  "yıl": 2023,
+  "rakip": "Alanyaspor",
+  "enlem": 36.562765,
+  "boylam": 32.079024,
+  "saat":21,
+  "dakika":30
+
+ },
+ {
+  "gün": 5,
+  "ay": 3,
+  "yıl": 2023,
+  "rakip": "Beşiktaş",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":21,
+  "dakika":0
+
+ },
+ {
+  "gün": 12,
+  "ay": 3,
+  "yıl": 2023,
+  "rakip": "Karagümrük",
+  "enlem": 41.074356,
+  "boylam": 28.765675,
+  "saat":19,
+  "dakika":15
+
+ },
+ {
+  "gün": 19,
+  "ay": 3,
+  "yıl": 2023,
+  "rakip": "Ankaragücü",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":20,
+  "dakika":0
+
+ },
+ {
+  "gün": 2,
+  "ay": 4,
+  "yıl": 2023,
+  "rakip": "Başakşehir",
+  "enlem": 41.073727,
+  "boylam": "28.768299&nbsp;",
+  "saat":21,
+  "dakika":30
+
+ },
+ {
+  "gün": 9,
+  "ay": 4,
+  "yıl": 2023,
+  "rakip": "İstanbulspor",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":21,
+  "dakika":45
+
+ },
+ {
+  "gün": 16,
+  "ay": 4,
+  "yıl": 2023,
+  "rakip": "Sivasspor",
+  "enlem": 39.728564,
+  "boylam": 36.983979,
+  "saat":19,
+  "dakika":30
+
+ },
+ {
+  "gün": 23,
+  "ay": 4,
+  "yıl": 2023,
+  "rakip": "Giresunspor",
+  "enlem": 40.889465,
+  "boylam": 38.43939,
+  "saat":21,
+  "dakika":0
+
+ },
+ {
+  "gün": 30,
+  "ay": 4,
+  "yıl": 2023,
+  "rakip": "Trabzonspor",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":19,
+  "dakika":45
+
+ },
+ {
+  "gün": 7,
+  "ay": 5,
+  "yıl": 2023,
+  "rakip": "Hatayspor",
+  "enlem": 36.211665,
+  "boylam": 36.158317,
+  "saat":20,
+  "dakika":30
+
+ },
+ {
+  "gün": 14,
+  "ay": 5,
+  "yıl": 2023,
+  "rakip": "Antalyaspor",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":21,
+  "dakika":45
+
+ },
+ {
+  "gün": 21,
+  "ay": 5,
+  "yıl": 2023,
+  "rakip": "Galatasaray",
+  "enlem": 41.10345,
+  "boylam": 28.991069,
+  "saat":20,
+  "dakika":0
+
+ },
+ {
+  "gün": 28,
+  "ay": 5,
+  "yıl": 2023,
+  "rakip": "Gaziantep FK",
+  "enlem": 40.987652,
+  "boylam": 29.037161,
+  "saat":22,
+  "dakika":30
+ }
+],
+};
+//"Sep 3,2022 21:45"
+
+
+
+let i=0;
+for(i=0;i<31;i++)
+{
+let match_year= data.maclar[i].yıl;
+let match_month=data.maclar[i].ay;
+let match_day=data.maclar[i].gün;
+let match_hours=data.maclar[i].saat
+
+let new_match=new Date(match_year,(match_month-1),match_day,match_hours).getTime();
+let now= new Date().getTime();
+if(new_match>now)
+break;
+}
+
+
+
+
+
+function fonks(){
+
+let match_year= data.maclar[i].yıl;
+let match_month=data.maclar[i].ay;
+let match_day=data.maclar[i].gün;
+let match_hours=data.maclar[i].saat;
+let match_minute=data.maclar[i].dakika;
+
+
+
+
+
+
+let new_match=new Date(match_year,(match_month-1),match_day,match_hours,match_minute).getTime();
+
+let now= new Date().getTime();
+let fark=new_match-now;
+let second=1000;
+let minute=second*60;
+let hours=minute*60;
+let day=hours*24;
+
+let fark_d=Math.floor((fark/day));
+let fark_saa=Math.floor((fark%day)/hours);
+let fark_dak=Math.floor((fark%hours)/minute);
+let fark_saniye=Math.floor((fark%minute)/second);
+
+
+
+
+
+if(fark_d<0){
+ window.location.reload(false) ;
+}
+if(fark_d==0){
+  document.getElementById('day').innerHTML="Maça Saatler Kaldı !";
+
+}
+else if (fark_d>0){
+document.getElementById('day').innerHTML= fark_d + " GÜN ";
+
+}
+
+
+document.getElementById('hour').innerHTML=fark_saa +" Saat   ";
+
+
+if(fark_dak<10){
+    document.getElementById('minute').innerHTML="0"+fark_dak +" dakika ";
+}
+else{
+    document.getElementById('minute').innerHTML=fark_dak +" dakika ";
+
+}
+
+
+if(fark_saniye<10){document.getElementById('second').innerHTML="0"+fark_saniye + " saniye";
+}
+else{
+    document.getElementById('second').innerHTML=fark_saniye+ " saniye";
+}
+
+
+
+var tarih= String(data.maclar[i].gün)  + "/"+  String(data.maclar[i].ay)+"/"  + String(data.maclar[i].yıl);
+document.getElementById('rakip').innerHTML="Fenerbahçe" + "<br>"+ " vs " +  "<br>" + data.maclar[i].rakip +"<br>"+ tarih + "<br>";
+
+
+if(data.maclar[i].tür==1){
+document.getElementById('süperlig').src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Europa_League_2021.svg/800px-Europa_League_2021.svg.png";
+}
+else{
+document.getElementById('süperlig').src="https://www.tff.org/Resources/TFF/Images/0000000015/TFF/TFF-Logolar/2021%20Spor%20Toto%20SL/spor-toto-super-lig-dikey.png";
+}
+let enlem=data.maclar[i].enlem;
+let boylam=data.maclar[i].boylam;
+
+
+//var map=L.map('map', {center:[enlem,boylam],zoom:11});
+
+
+var zoom=12;
+
+var map=L.map('map').setView([enlem,boylam],zoom);
+map.removeControl( map.zoomControl );
+
+
+
+function onLocationFound(e){
+  L.marker(e.latlng).addTo(map);
+  L.Routing.control({show: false, waypoints: [ L.latLng(e.latlng), L.latLng(enlem, boylam)],
+    lineOptions: {
+        styles: [
+          {
+            color: "black",
+            opacity: 0.6,
+            weight: 4
+          }
+        ],
+        createMarker: 
+        function()
+        { return null; },
+
+  },
+      addWaypoints: false,
+      draggableWaypoints: false,
+      fitSelectedRoutes: true,
+      showAlternatives: false}).addTo(map);
+  map.setZoom(4);
+
+}
+
+
+
+L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+var stad_icon = L.icon({
+    iconUrl: 'https://icon-library.com/images/stadium-icon-png/stadium-icon-png-24.jpg',
+    iconSize: [60, 60]
+    })
+
+var marker=L.marker([data.maclar[i].enlem, data.maclar[i].boylam],{icon:stad_icon}).addTo(map);
+
+
+
+
+var btnnext= document.getElementById('go');
+btnnext.onclick=function(){
+i=i+1; 
+
+L.marker([data.maclar[i].enlem, data.maclar[i].boylam],{icon:stad_icon}).addTo(map);
+map.flyTo([data.maclar[i].enlem,data.maclar[i].boylam],14);
+
+}
+var btnback=document.getElementById('back');
+btnback.onclick=function(){
+i=i-1;
+L.marker([data.maclar[i].enlem, data.maclar[i].boylam],{icon:stad_icon}).addTo(map);
+map.flyTo([data.maclar[i].enlem,data.maclar[i].boylam],14);
+}
+
+
+
+
+
+
+}
+setInterval(function(){
+    fonks();
+},1000);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
